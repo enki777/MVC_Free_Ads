@@ -22,5 +22,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'IndexController@showIndex')->name('index');
 Route::get('/home', 'IndexController@showIndex')->name('index');
 Route::get('/index', 'IndexController@showIndex')->name('index');
-Route::get('/register', 'UserController@showRegister')->name('register');
-Route::get('/registered', 'UserController@showRegistered')->name('registered');
+// Route::get('/register', 'UserController@showRegister')->name('register');
+// Route::get('/registered', 'UserController@showRegistered')->name('registered');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+Auth::routes(['verify' => true]);
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/profile', 'UserController@showProfile')->name('profile');

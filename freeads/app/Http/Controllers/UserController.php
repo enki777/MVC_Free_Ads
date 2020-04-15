@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function showRegister(){
-        return view('register');
+    public function __construct()
+    {
+        $this->middleware('verified');
     }
 
-    public function showRegistered(){
-        var_dump($_GET);
-        var_dump($_POST);
+    public function showprofile(){
+        return view('profile');
     }
 }
