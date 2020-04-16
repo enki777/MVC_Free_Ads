@@ -14,4 +14,8 @@ class UserController extends Controller
     public function showprofile(){
         return view('profile');
     }
+
+    public function index(){
+        
+    }
 }
