@@ -2,7 +2,6 @@
 @section('content')
 <br><br>
 <a href="{{route('articles.index')}}" class="btn btn-primary">retour</a>
-<br><br>
 <div class="row">
     <div class="col-sm-12">
         <h1>Article Edit</h1><br>
@@ -13,3 +12,4 @@
         {{ Form::close() }}
     </div>
 </div>
+@endsection

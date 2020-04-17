@@ -21,3 +21,4 @@
         <td>{{$article->body}}</td>
     </tr>   
 </table>
+@endsection

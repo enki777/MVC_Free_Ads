@@ -25,7 +25,7 @@
                 <a href="{{route('articles.show', $value->id)}}" class="btn btn-info btn-md">show</a>
                 <a href="{{route('articles.edit', $value->id)}}" class="btn btn-info btn-md">edit</a>
                 {{ Form::open(['method'=> 'DELETE', 'route'=>['articles.destroy', $value->id], 'style'=>'display: inline;'])  }}
-                    <button type="submit" style="display: inline;" class="btn btn-danger btn-md" href="{{route('articles.index')}}">delete</button>
+                    <button type="submit" style="display: inline;" class="btn btn-danger btn-md">delete</button>
                 {{ Form::close() }}
             </td>
         </tr>

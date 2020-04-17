@@ -34,6 +34,6 @@ Auth::routes(['verify' => true]);
 
 Route::get('home', 'HomeController@index')->name('home');
 
-Route::get('profile', 'UserController@showProfile')->name('profile');
+Route::resource('profile', 'UserController');
 
 Route::resource('articles', 'ArticlesController');

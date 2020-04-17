@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<br><br>
+
 <a href="{{route('articles.index')}}" class="btn btn-primary">retour</a>
 <br><br>
 <div class="row">
@@ -13,3 +13,4 @@
         {{ Form::close() }}
     </div>
 </div>
+@endsection

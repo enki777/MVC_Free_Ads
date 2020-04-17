@@ -40,7 +40,7 @@ class ArticlesController extends Controller
             'title'=>'required|string|max:255', 
             'body'=>'required', 
         ]);
-        articles::create($request->all());
+        Articles::create($request->all());
         return redirect()->route('articles.index');
     }
 
