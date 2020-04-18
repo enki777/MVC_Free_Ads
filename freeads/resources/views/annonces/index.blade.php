@@ -14,7 +14,7 @@
         <div class="card border border-dark" style="margin: 30px;">
             <div class="card-header">
                 <div style="float: left">
-                    <h3> {{$each->name}}  | <span class="text text-muted font-italic" style="font-size: 13px;">{{$each->updated_at}}</span></h3>
+                    <h3> {{$each->name}} | <span class="text text-muted font-italic" style="font-size: 13px;">{{$each->updated_at}}</span></h3>
                 </div>
                 @if($each->user_id == auth()->user()->id)
                 <div style="float: right">

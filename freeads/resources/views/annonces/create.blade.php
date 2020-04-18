@@ -7,7 +7,7 @@
         <a href="{{route('annonces.index')}}" class="btn btn-primary">retour</a>
     </div>
     <div class="card-body">
-        {{ Form::open(['route'=>'annonces.store', 'method'=>'POST']) }}
+        {{ Form::open(['route'=>'annonces.store', 'method'=>'POST', 'id'=>'createForm']) }}
             @include('annonces.form_control')
         {{ Form::close() }}
     </div>

@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use App\Annonce;
 use App\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Auth\Events\Verified;
 
 class AnnonceController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -20,8 +22,9 @@ class AnnonceController extends Controller
         $annonces = DB::table('users')
             ->join('annonces', 'users.id', '=', 'annonces.user_id')
             ->select('*')
+            ->orderBy('annonces.updated_at', 'desc')
             ->get();
-        return view('annonces.index',compact('annonces'));
+        return view('annonces.index', compact('annonces'));
     }
 
     /**
@@ -42,21 +45,26 @@ class AnnonceController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'title' => 'required',
-            'body' => 'required',
-            'prix' => 'required'
-        ]);
-
-        $user = User::find(Auth::user()->id);
-        Annonce::create([
-            'title'=> $request['title'],
-            'body'=> $request['body'],
-            'image'=> '',
-            'prix'=> $request['prix'],
-            'user_id'=> $user->id
+        // $user = User::find(Auth::user()->id);
+        if(!Auth::user()->email_verified_at) {
+            return redirect()->route('annonces.index');
+        } else {
+            $user = User::find(Auth::user()->id);
+            $this->validate($request, [
+                'title' => 'required',
+                'body' => 'required',
+                'prix' => 'required'
             ]);
-        return redirect()->route('annonces.index');
+
+            Annonce::create([
+                'title' => $request['title'],
+                'body' => $request['body'],
+                'image' => '',
+                'prix' => $request['prix'],
+                'user_id' => $user->id
+            ]);
+            return redirect()->route('annonces.index');
+        }
     }
 
     /**
@@ -67,7 +75,6 @@ class AnnonceController extends Controller
      */
     public function show(Annonce $annonce)
     {
-        
     }
 
     /**
@@ -78,7 +85,7 @@ class AnnonceController extends Controller
      */
     public function edit(Annonce $annonce)
     {
-        return view('annonces.edit',compact('annonce'));
+        return view('annonces.edit', compact('annonce'));
     }
 
     /**
@@ -90,18 +97,18 @@ class AnnonceController extends Controller
      */
     public function update(Request $request, Annonce $annonce)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
             'prix' => 'required'
-            ]);
+        ]);
 
-            $annonce->update([
+        $annonce->update([
             'title' => $request['title'],
             'body' => $request['body'],
             'prix' => $request['prix'],
-            ]);
-            return redirect()->route('annonces.index');
+        ]);
+        return redirect()->route('annonces.index');
     }
 
     /**
@@ -111,7 +118,7 @@ class AnnonceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Annonce $annonce)
-    {   
+    {
         $annonce->delete();
         return redirect()->route('annonces.index');
     }
