@@ -17,7 +17,6 @@ class AnnonceController extends Controller
      */
     public function index()
     {
-        // $user = User::find(Auth::user()->id);
         $annonces = DB::table('users')
             ->join('annonces', 'users.id', '=', 'annonces.user_id')
             ->select('*')
@@ -48,7 +47,7 @@ class AnnonceController extends Controller
             'body' => 'required',
             'prix' => 'required'
         ]);
-        
+
         $user = User::find(Auth::user()->id);
         Annonce::create([
             'title'=> $request['title'],
@@ -68,7 +67,7 @@ class AnnonceController extends Controller
      */
     public function show(Annonce $annonce)
     {
-        echo 'yes';
+        
     }
 
     /**

@@ -18,10 +18,10 @@
                 </div>
                 @if($each->user_id == auth()->user()->id)
                 <div style="float: right">
-                    <a href="{{route('annonces.edit',$each->id)}}" class="btn btn-dark btn-md">Editer</a>   
-                {{ Form::open( ['method'=> 'DELETE', 'route'=>['annonces.destroy', $each->id], 'style'=>'display: inline;'])  }}
+                    <a href="{{route('annonces.edit',$each->id)}}" class="btn btn-dark btn-md">Editer</a>
+                    {{ Form::open( ['method'=> 'DELETE', 'route'=>['annonces.destroy', $each->id], 'style'=>'display: inline;'])  }}
                     <button type="submit" class="btn btn-danger btn-md">Delete</button>
-                {{ Form::close() }}
+                    {{ Form::close() }}
                 </div>
                 @endif
             </div>

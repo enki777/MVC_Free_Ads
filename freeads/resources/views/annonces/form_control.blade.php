@@ -34,7 +34,7 @@
     </div>
     <div class="col-sm-10">
         <div class="form-group {{ $errors->has('body') ? 'has-error' : '' }}">
-            {{ Form::number('prix',NULL,['class'=>'form-control', 'id'=>'prix', 'placeholder'=>'Prix', 'step'=>'0.01']) }}
+            {{ Form::number('prix',NULL,['class'=>'form-control', 'id'=>'prix', 'placeholder'=>'Prix', 'step'=>'0.01', 'min'=> '0']) }}
             @error('prix')
                     <div class="alert alert-danger col-sm-6">{{ $message }}</div>
             @enderror
