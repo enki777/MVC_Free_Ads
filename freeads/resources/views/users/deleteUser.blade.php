@@ -8,7 +8,7 @@
         <h4>Entrez votre mot de passe pour confirmer la suppression votre compte</h4>
     </div>
     <div class="card-body">
-        {{ Form::model($user, ['method'=> 'DELETE', 'route'=>['profile.destroy', $user->id], 'style'=>'display: inline;'])  }}
+        {{ Form::open( ['method'=> 'DELETE', 'route'=>['profile.destroy', $user->id], 'style'=>'display: inline;'])  }}
         <div class="row">
             <div class="col-sm-2">
                 {{ Form::label('password', 'Mot de passe :') }}

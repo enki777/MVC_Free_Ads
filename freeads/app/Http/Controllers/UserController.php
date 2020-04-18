@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -65,7 +66,7 @@ class UserController extends Controller
     public function edit($id)
     {
         // $user = auth()->user();
-        $user = User::find($id);
+        $user = User::find(Auth::user()->id);
         // var_dump($user);
         return view('users.edit', compact('user'));
     }
@@ -79,7 +80,8 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
+        $user = User::find(Auth::user()->id);
+        $password= Hash::make($request['password']);
         // $user = auth()->user();
         $pwds = [$request['password'], $request['passwordCheck']];
 
@@ -91,7 +93,11 @@ class UserController extends Controller
                 'email' => 'required',
                 'password' => 'required|min:8',
             ]);
-            $user->update($request->all());
+            $user->update([
+                'name'=>$request['name'],
+                'email'=>$request['email'],
+                'password'=>$password
+            ]);
             return redirect()->route('profile.index');
         }
 
@@ -107,13 +113,13 @@ class UserController extends Controller
      */
     public function userDeleteForm($id)
     {
-        $user = User::find($id);
+        $user = User::find(Auth::user()->id);
         return view('users.deleteUser', compact('user'));
     }
 
     public function destroy(Request $request, $id)
     {
-        $user = User::find($id);
+        $user = User::find(Auth::user()->id);
         if ($request['password'] !== $request['passwordCheck']) {
             return back()->with('error', 'les mdp ne sont pas identiques');
         }elseif(empty($request['password']) || empty($request['passwordCheck'])){

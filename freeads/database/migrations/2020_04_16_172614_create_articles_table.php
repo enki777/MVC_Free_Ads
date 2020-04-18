@@ -17,6 +17,8 @@ class CreateArticlesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('body');
+            $table->binary('image')->nullable();
+            $table->float('prix');
             $table->timestamps();
         });
     }

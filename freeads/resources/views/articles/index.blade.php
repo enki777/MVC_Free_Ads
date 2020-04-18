@@ -11,6 +11,8 @@
             <th with="80px">No</th>
             <th>Titre</th>
             <th>Body</th>
+            <th>Prix</th>
+            <th>Photo descriptive</th>
             <th with="140px" class="text-center">
                 <a href="{{route('articles.create')}}" class="btn btn-success btn-md">+</a>
             </th>
@@ -21,6 +23,8 @@
             <td>{{$no++}}</td>
             <td>{{ $value->title }}</td>
             <td>{{ $value->body }}</td>
+            <td>{{ $value->prix }}€</td>
+            <td>{{ $value->image }}</td>
             <td with="140px" class="text-center">
                 <a href="{{route('articles.show', $value->id)}}" class="btn btn-info btn-md">show</a>
                 <a href="{{route('articles.edit', $value->id)}}" class="btn btn-info btn-md">edit</a>

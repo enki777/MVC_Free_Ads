@@ -39,6 +39,7 @@ class ArticlesController extends Controller
         $this->validate($request, [
             'title'=>'required|string|max:255', 
             'body'=>'required', 
+            'prix'=>'required'
         ]);
         Articles::create($request->all());
         return redirect()->route('articles.index');

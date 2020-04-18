@@ -22,6 +22,20 @@
     </div>
 </div>
 
+
+
+<div class="row">
+    <div class="col-sm-2">
+    {{  Form::label('prix', 'Prix') }}
+    </div>
+    <div class="col-sm-10">
+        <div class="form-group {{ $errors->has('body') ? 'has-error' : '' }}">
+            {{ Form::number('prix',NULL,['class'=>'form-control', 'id'=>'prix', 'placeholder'=>'Prix', 'step'=>'0.01']) }}
+            {{ $errors->first('prix', '<p class="help-block">:message</p>') }}
+        </div>
+    </div>
+</div>
+
 <div class="form-group">
     {{ Form::button('save', ['class'=>'btn btn-success', 'type'=>'submit']) }}
 </div>
