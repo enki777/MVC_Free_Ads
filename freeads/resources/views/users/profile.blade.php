@@ -1,23 +1,25 @@
 @extends('layouts.app')
 @section('content')
 
-<table class="table table-bordered">
-    <tr>
-        <th class="text text-primary">Votre nom :</th>
-        <th class="text text-primary">Votre email :</th>
-        <th class="text text-primary">Date de creation :</th>
-        <th class="text text-danger">Options de profil :</th>
-    </tr>
-    <tr>
-        <td>{{$user->name}}</td>
-        <td>{{$user->email}}</td>
-        <td>{{$user->created_at}}</td>
-        <td with="140px" class="text-center">
-            <a href="{{route('profile.edit', $user->id)}}" class="btn btn-dark btn-md">Editer</a>
-            <a href="{{route('userDeleteForm', $user->id)}}" class="btn btn-danger btn-md">Supprimer</a>
-        </td>
-    </tr>
-</table>
+<div class="col-sm-11" style="margin-left: 70px;">
+    <table class="table table-bordered bg-dark">
+        <tr>
+            <th class="text text-primary">Votre nom :</th>
+            <th class="text text-primary">Votre email :</th>
+            <th class="text text-primary">Date de creation :</th>
+            <th class="text text-danger">Options de profil :</th>
+        </tr>
+        <tr>
+            <td class="text text-white">{{$user->name}}</td>
+            <td class="text text-white">{{$user->email}}</td>
+            <td class="text text-white">{{$user->created_at}}</td>
+            <td with="140px" class="text-center">
+                <a href="{{route('profile.edit', $user->id)}}" class="btn btn-light btn-md">Editer</a>
+                <a href="{{route('userDeleteForm', $user->id)}}" class="btn btn-danger btn-md">Supprimer</a>
+            </td>
+        </tr>
+    </table>
+</div>
 
 <div class="card  border border-dark" style="margin: 25px">
     <div class="card-header">

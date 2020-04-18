@@ -43,5 +43,5 @@
 </div>
 
 <div class="form-group">
-    {{ Form::button('save', ['class'=>'btn btn-success', 'type'=>'submit']) }}
+    {{ Form::button('save', ['class'=>'btn btn-md btn-success','style'=>'padding-left: 18px;padding-right: 18px', 'type'=>'submit']) }}
 </div>
