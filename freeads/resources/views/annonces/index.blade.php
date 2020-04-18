@@ -31,7 +31,7 @@
                 <p class="text font-italic">{{$each->created_at}}</p>
                 <hr>
                 <h6>{{$each->body}}</h6>
-                <h6>{{$each->prix}}</h6>
+                <h6>{{$each->prix}} €</h6>
             </div>
         </div>
         @endforeach

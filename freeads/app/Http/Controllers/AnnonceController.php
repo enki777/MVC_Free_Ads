@@ -43,8 +43,13 @@ class AnnonceController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'title' => 'required',
+            'body' => 'required',
+            'prix' => 'required'
+        ]);
+        
         $user = User::find(Auth::user()->id);
-        // var_dump($user->id);
         Annonce::create([
             'title'=> $request['title'],
             'body'=> $request['body'],
@@ -86,12 +91,11 @@ class AnnonceController extends Controller
      */
     public function update(Request $request, Annonce $annonce)
     {
-        // $this->validate($request,[
-        //     'title' => 'required',
-        //     'body' => 'required',
-        //     'prix' => 'required',
-        //     'user_id' => $annonce->user_id
-        //     ]);
+        $this->validate($request,[
+            'title' => 'required',
+            'body' => 'required',
+            'prix' => 'required'
+            ]);
 
             $annonce->update([
             'title' => $request['title'],

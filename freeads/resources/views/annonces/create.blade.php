@@ -8,7 +8,7 @@
     </div>
     <div class="card-body">
         {{ Form::open(['route'=>'annonces.store', 'method'=>'POST']) }}
-        @include('annonces.form_control')
+            @include('annonces.form_control')
         {{ Form::close() }}
     </div>
 </div>

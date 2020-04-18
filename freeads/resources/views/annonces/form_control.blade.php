@@ -5,7 +5,9 @@
     <div class="col-sm-10">
         <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
             {{ Form::text('title',NULL,['class'=>'form-control', 'id'=>'title', 'placeholder'=>'Titre']) }}
-            {{ $errors->first('title', '<p class="form-control">:message</p>') }}
+            @error('title')
+                    <div class="alert alert-danger col-sm-6">{{ $message }}</div>
+            @enderror
         </div>
     </div>
 </div>
@@ -17,7 +19,9 @@
     <div class="col-sm-10">
         <div class="form-group {{ $errors->has('body') ? 'has-error' : '' }}">
             {{ Form::text('body',NULL,['class'=>'form-control', 'id'=>'body', 'placeholder'=>'Contenu']) }}
-            {{ $errors->first('body', '<p class="help-block">:message</p>') }}
+            @error('body')
+                    <div class="alert alert-danger col-sm-6">{{ $message }}</div>
+            @enderror
         </div>
     </div>
 </div>
@@ -31,7 +35,9 @@
     <div class="col-sm-10">
         <div class="form-group {{ $errors->has('body') ? 'has-error' : '' }}">
             {{ Form::number('prix',NULL,['class'=>'form-control', 'id'=>'prix', 'placeholder'=>'Prix', 'step'=>'0.01']) }}
-            {{ $errors->first('prix', '<p class="help-block">:message</p>') }}
+            @error('prix')
+                    <div class="alert alert-danger col-sm-6">{{ $message }}</div>
+            @enderror
         </div>
     </div>
 </div>
