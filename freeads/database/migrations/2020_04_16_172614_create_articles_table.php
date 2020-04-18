@@ -13,13 +13,16 @@ class CreateArticlesTable extends Migration
      */
     public function up()
     {
-        Schema::create('articles', function (Blueprint $table) {
+        Schema::create('annonces', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
             $table->string('body');
             $table->binary('image')->nullable();
             $table->float('prix');
             $table->timestamps();
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onDelete('cascade');
         });
     }
 
@@ -30,6 +33,6 @@ class CreateArticlesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('articles');
+        Schema::dropIfExists('annonces');
     }
 }

@@ -37,5 +37,5 @@ Route::get('profile/deleteUser/{id}','Usercontroller@userDeleteForm')->name('use
 
 Route::resource('profile', 'UserController');
 
-Route::resource('articles', 'ArticlesController');
+Route::resource('annonces', 'AnnonceController');
 

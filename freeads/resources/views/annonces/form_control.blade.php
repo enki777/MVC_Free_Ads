@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-2">
-        {{ Form::label('titre', 'Titre') }}
+        {{ Form::label('titre', 'Titre :') }}
     </div>
     <div class="col-sm-10">
         <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
@@ -12,7 +12,7 @@
 
 <div class="row">
     <div class="col-sm-2">
-    {{  Form::label('contenu', 'Contenu') }}
+    {{  Form::label('contenu', 'Contenu :') }}
     </div>
     <div class="col-sm-10">
         <div class="form-group {{ $errors->has('body') ? 'has-error' : '' }}">
@@ -26,7 +26,7 @@
 
 <div class="row">
     <div class="col-sm-2">
-    {{  Form::label('prix', 'Prix') }}
+    {{  Form::label('prix', 'Prix :') }}
     </div>
     <div class="col-sm-10">
         <div class="form-group {{ $errors->has('body') ? 'has-error' : '' }}">
