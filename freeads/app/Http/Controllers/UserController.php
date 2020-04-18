@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\User;
 
 class UserController extends Controller
 {
@@ -32,7 +32,6 @@ class UserController extends Controller
      */
     public function create()
     {
-        //you can watch for Http\Controllers\Auth\RegisterController.php
     }
 
     /**
@@ -43,7 +42,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //you can watch for Http\Controllers\Auth\RegisterController.php
     }
 
     /**
@@ -78,31 +77,32 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $user = User::find(Auth::user()->id);
-        $password= Hash::make($request['password']);
         // $user = auth()->user();
-        $pwds = [$request['password'], $request['passwordCheck']];
-
-        if ($request['password'] !== $request['passwordCheck']) {
-            return back()->with('error', 'les mdp ne sont pas identiques');
-        } else {
-            $this->validate($request, [
-                'name' => 'required',
-                'email' => 'required',
-                'password' => 'required|min:8',
-            ]);
-            $user->update([
-                'name'=>$request['name'],
-                'email'=>$request['email'],
-                'password'=>$password
-            ]);
-            return redirect()->route('profile.index');
+        foreach ($request->request as $key => $value) {
+            if (isset($value) && $key != '_token' && $key != '_method') {
+                if (!empty($request['currentPassword'])){
+                    if(Hash::check($request['currentPassword'], $user->password)) {
+                        if ($request['password'] == $request['passwordCheck']) {
+                            $arr[$key] = $value;
+                            $arr['password'] = Hash::make($value);
+                            unset($arr['passwordCheck']);
+                            unset($arr['currentPassword']);
+                        } else {
+                            return back()->with('error', 'Vos mots de passe ne sont pas identiques !');
+                        }
+                    }else{
+                        return back()->with('error', 'Mot de passe incorrect !');
+                    }
+                } else {
+                    return back()->with('error', 'Vous devez renseigner votre mot de passe !');
+                }
+            }
         }
-
-
-        // $password = Hash::make($user->password);
+        $user->update($arr);
+        return redirect()->route('profile.index');
     }
 
     /**
@@ -121,14 +121,14 @@ class UserController extends Controller
     {
         $user = User::find(Auth::user()->id);
         if ($request['password'] !== $request['passwordCheck']) {
-            return back()->with('error', 'les mdp ne sont pas identiques');
-        }elseif(empty($request['password']) || empty($request['passwordCheck'])){
+            return back()->with('error', 'les mots de passe ne sont pas identiques');
+        } elseif (empty($request['password']) || empty($request['passwordCheck'])) {
             return back()->with('error', 'Vous devez remplir les champs pour valider la suppression !');
-        }elseif (Hash::check($request['password'], $user->password)) {
+        } elseif (Hash::check($request['password'], $user->password)) {
             $user->delete();
             return redirect()->route('profile.index');
         } else {
-            return back()->with('error', 'Votre mot de passe est incorrect !');;
+            return back()->with('error', 'Votre mot de passe est incorrect !');
         }
     }
 }
