@@ -31,6 +31,8 @@
                 <h6>{{$each->body}}</h6>
                 <hr>
                 <h6>{{$each->prix}} €</h6>
+                <hr>
+                <img src="{{$each->image}}" />
             </div>
         </div>
         @endforeach

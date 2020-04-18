@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Annonce;
 use App\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Auth\Events\Verified;
 
 class AnnonceController extends Controller
 {
@@ -46,7 +45,7 @@ class AnnonceController extends Controller
     public function store(Request $request)
     {
         // $user = User::find(Auth::user()->id);
-        if(!Auth::user()->email_verified_at) {
+        if (!Auth::user()->email_verified_at) {
             return redirect()->route('annonces.index');
         } else {
             $user = User::find(Auth::user()->id);
@@ -56,10 +55,23 @@ class AnnonceController extends Controller
                 'prix' => 'required'
             ]);
 
+
+            if ($request->hasFile('image')) {
+                if ($request->file('image')->isValid()) {
+                    $file = $request->file('image');
+                    // $extension = $request->image->extension();
+                    $path = $request->image->store('images');
+                    $filename = $path;
+                    $file->move('images', $filename);
+                }
+            } else {
+                $filename = null;
+            }
+
             Annonce::create([
                 'title' => $request['title'],
                 'body' => $request['body'],
-                'image' => '',
+                'image' => $filename,
                 'prix' => $request['prix'],
                 'user_id' => $user->id
             ]);
@@ -97,6 +109,8 @@ class AnnonceController extends Controller
      */
     public function update(Request $request, Annonce $annonce)
     {
+        $user = User::find(Auth::user()->id);
+
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required',
@@ -107,6 +121,7 @@ class AnnonceController extends Controller
             'title' => $request['title'],
             'body' => $request['body'],
             'prix' => $request['prix'],
+            'user_id'=>$user->id
         ]);
         return redirect()->route('annonces.index');
     }
