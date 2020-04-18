@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\User;
 
 class UserController extends Controller
 {
     public function __construct()
     {
         $this->middleware('verified');
-    } 
+    }
 
     /**
      * Display a listing of the resource.
@@ -20,7 +21,7 @@ class UserController extends Controller
     public function index()
     {
         $user = auth()->user();
-        return view('users.profile',compact('user'));
+        return view('users.profile', compact('user'));
     }
 
     /**
@@ -61,10 +62,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        $user = auth()->user();
-        // $user = User::find($id);
+        // $user = auth()->user();
+        $user = User::find($id);
+        // var_dump($user);
         return view('users.edit', compact('user'));
     }
 
@@ -75,19 +77,26 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $user = auth()->user();
-        $password = Hash::make($user->password);
-        $this->validate($request,[
-            'name' => 'required',
-            'email' => 'required',
-            'password' => '',
-        ]);
-        // $user = User::find($id);
-        $user->update($request->all());
-        // var_dump($request);
-        return redirect()->route('profile.index');
+        $user = User::find($id);
+        // $user = auth()->user();
+        $pwds = [$request['password'], $request['passwordCheck']];
+
+        if ($request['password'] !== $request['passwordCheck']) {
+            return back()->with('error', 'les mdp ne sont pas identiques');
+        } else {
+            $this->validate($request, [
+                'name' => 'required',
+                'email' => 'required',
+                'password' => 'required|min:8',
+            ]);
+            $user->update($request->all());
+            return redirect()->route('profile.index');
+        }
+
+
+        // $password = Hash::make($user->password);
     }
 
     /**
@@ -96,10 +105,24 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function userDeleteForm($id)
     {
-        $user = auth()->user();
-        $user->delete();
-        return redirect()->route('profile.index');
+        $user = User::find($id);
+        return view('users.deleteUser', compact('user'));
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        $user = User::find($id);
+        if ($request['password'] !== $request['passwordCheck']) {
+            return back()->with('error', 'les mdp ne sont pas identiques');
+        }elseif(empty($request['password']) || empty($request['passwordCheck'])){
+            return back()->with('error', 'Vous devez remplir les champs pour valider la suppression !');
+        }elseif (Hash::check($request['password'], $user->password)) {
+            $user->delete();
+            return redirect()->route('profile.index');
+        } else {
+            return back()->with('error', 'Votre mot de passe est incorrect !');;
+        }
     }
 }

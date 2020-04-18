@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<a href="{{route('profile.index')}}" class="btn btn-primary">retour</a>
+<a href="{{route('profile.index')}}" class="btn btn-primary" style="margin-left: 15px;">retour</a>
 <br><br>
 <div class="card">
     <div class="card-header">

@@ -29,11 +29,13 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
 Auth::routes(['verify' => true]);
 
 Route::get('home', 'HomeController@index')->name('home');
 
+Route::get('profile/deleteUser/{id}','Usercontroller@userDeleteForm')->name('userDeleteForm');
+
 Route::resource('profile', 'UserController');
 
 Route::resource('articles', 'ArticlesController');
+
