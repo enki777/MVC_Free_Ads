@@ -87,27 +87,35 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $user = User::find(Auth::user()->id);
-        // $user = auth()->user();
-        foreach ($request->request as $key => $value) {
-            if (isset($value) && $key != '_token' && $key != '_method') {
+        $registerUsers = User::all();
+        // return view('users.profile', compact('user','annonces'));
+        $user = auth()->user();
+        foreach ($request->request as $key => $value){
+            if (isset($value) && $key != '_token' && $key != '_method'){
                 if (!empty($request['currentPassword'])){
-                    if(Hash::check($request['currentPassword'], $user->password)) {
-                        if ($request['password'] == $request['passwordCheck']) {
-                            $arr[$key] = $value;
-                            $arr['password'] = Hash::make($value);
-                            unset($arr['passwordCheck']);
-                            unset($arr['currentPassword']);
-                        } else {
-                            return back()->with('error', 'Vos mots de passe ne sont pas identiques !');
+                    if(Hash::check($request['currentPassword'], $user->password)){
+                        foreach($registerUsers as $value1){
+                            if($request['email'] !== $value1->email || $request['email'] == $user->email){
+                                if ($request['password'] == $request['passwordCheck']){
+                                    $arr[$key] = $value;
+                                    $arr['password'] = Hash::make($value);
+                                    unset($arr['passwordCheck']);
+                                    unset($arr['currentPassword']);
+                                }else{
+                                    return back()->with('error', 'Vos mots de passe ne sont pas identiques !');
+                                }
+                            }else{
+                                return back()->with('error', 'Cet email existe deja !');  
+                            }
                         }
                     }else{
                         return back()->with('error', 'Mot de passe incorrect !');
                     }
-                } else {
+                }else{
                     return back()->with('error', 'Vous devez renseigner votre mot de passe !');
                 }
             }
-        }
+        }         
         $user->update($arr);
         return redirect()->route('profile.index');
     }
